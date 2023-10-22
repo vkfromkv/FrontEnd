@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
 }
 
@@ -40,3 +40,58 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Sidebar styles */
+/* Add margin to the top of the sidebar to push it down */
+.sidebar {
+  position: fixed;
+  top: 0px; /* Adjust the value to determine how far down the sidebar should start */
+  left: 0;
+  bottom: 0;
+  width: 9rem !important; /* Adjust the width as needed to make it thin */
+  z-index: 1000;
+  padding: 0.5rem 1.5rem;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+}
+
+.top-element-text {
+  font-size: 17px; /* Adjust the font size as needed */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+
+/* Add margin to the top of the top element */
+.top-element {
+  margin-top: 0px; /* Adjust the margin as needed */
+}
+
+.nav-link {
+  display: block;
+  margin: auto;
+}
+
+
+/* Add margin to push the Sign Up, Login, and Forums items down */
+.nav.flex-column .nav-item:nth-of-type(2) {
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.nav.flex-column .nav-item:nth-of-type(4) {
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.nav.flex-column .nav-item:nth-of-type(6) {
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+/* Add a margin to move the top navbar elements to the left */
+.navbar-nav {
+  margin-left: 20px; /* Adjust the value as needed */
+}
+
+/* If you want to move the entire navbar, you can use this */
+.navbar {
+  margin-left: 20px; /* Adjust the value as needed */
+}
+
