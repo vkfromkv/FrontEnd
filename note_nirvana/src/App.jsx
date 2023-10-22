@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import SampleText from "./components/SampleText.jsx";
-import Sidebar from "./Sidebar"; // Make sure the import path is correct
+import Sidebar from "./Sidebar";
+import About from "./About";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
+    <Router>
     <div className="app-container">
-      {/* Top Navbar */}
+      
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <button
@@ -33,7 +36,7 @@ function App() {
                 <a className="nav-link" href="#">List of Songs</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">About Us</a>
+                <a className="nav-link" href="/about">About Us</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">Contact Us</a>
@@ -43,14 +46,18 @@ function App() {
         </div>
       </nav>
       
-      {/* Content */}
+      <Routes>
+          <Route path="/about" element={<About />} />
+      </Routes>
+
       <div className="content-container">
         <Sidebar />
         <main className="main-content">
-          <SampleText />
+         {location.pathname !== '/about' && <SampleText />}
         </main>
       </div>
     </div>
+    </Router>
   );
 }
 
