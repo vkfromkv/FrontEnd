@@ -27,7 +27,6 @@ function Sidebar() {
                 Forums
               </a>
             </li>
-            {/* Add more sidebar items as needed */}
           </ul>
         </>
       </div>
