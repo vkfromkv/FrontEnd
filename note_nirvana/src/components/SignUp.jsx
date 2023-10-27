@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import validator from "validator";
-import "./user.css";
 import AuthContext from "./UserContext";
+import ShowPassword from "./ShowPassword";
 
 const SignUp = () => {
   const ctx = useContext(AuthContext);
@@ -30,11 +30,8 @@ const SignUp = () => {
   };
 
   return (
-    <div className="form-container">
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={submitHandler}
-      >
+    <div className="d-flex flex-column gap-3 p-4">
+      <form className="d-flex flex-column" onSubmit={submitHandler}>
         <input
           placeholder="Email"
           type="text"
@@ -58,16 +55,8 @@ const SignUp = () => {
             setConfirmPassword(event.target.value);
           }}
         ></input>
-        <p className="error-message">{error}</p>
-        <div>
-          <input
-            type="checkbox"
-            onChange={(event) => {
-              setVisible(event.target.checked);
-            }}
-          ></input>
-          <label style={{ paddingLeft: "5px" }}>Show password</label>
-        </div>
+        <p className="text-danger small mb-3">{error}</p>
+        <ShowPassword />
         <button
           type="submit"
           disabled={
@@ -75,7 +64,7 @@ const SignUp = () => {
             newPassword.trim() === "" ||
             confirmPassword.trim() === ""
           }
-          className="submit-btn"
+          className="btn btn-primary font-weight-bold rounded p-2 "
         >
           Sign Up
         </button>
@@ -83,7 +72,7 @@ const SignUp = () => {
       <div style={{ textAlign: "center" }}>
         <label>Already have an account?</label>
         <button
-          className="button-like-link"
+          className="btn btn-link text-primary m-2 w-50"
           onClick={() => {
             ctx.setDoesnot(true);
           }}
