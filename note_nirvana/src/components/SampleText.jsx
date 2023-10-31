@@ -20,10 +20,10 @@ const SampleText = () => {
 
   return (
     <>
-      <div>
+      <div className="container text-center my-5">
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary my-5"
           onClick={() => handleButtonClick()}
         >
           Click Here

@@ -19,10 +19,13 @@ function Sidebar() {
         setDoesnot: setDoesnot,
       }}
     >
-      <nav className="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <nav
+        style={{ width: "9rem" }}
+        className="col-md-3 col-lg-2 d-md-block bg-light position-fixed top-0 start-0 bottom-0 w-2 z-1 overflow-auto py-3 px-4"
+      >
         <div className="position-sticky">
           <>
-            <Link to="/" className="top-element non-link">
+            <Link to="/" className="mt-0 text-decoration-none text-reset">
               <p className="top-element-text">Note Nirvana</p>
             </Link>
             <ul className="nav flex-column" style={{ marginTop: "20px" }}>
@@ -46,11 +49,6 @@ function Sidebar() {
               <li className="nav-item">
                 <div className="spacer"></div>
               </li>
-              {/* <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Login
-                </a>
-              </li> */}
               <li className="nav-item">
                 <a className="nav-link" href="#">
                   Forums
