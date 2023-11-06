@@ -11,6 +11,8 @@ import SampleText from "./components/SampleText.jsx";
 import Sidebar from "./Sidebar";
 import About from "./About";
 import Navbar from "./components/Navbar";
+import SignIn from "./components/SignIn.jsx";
+import SignUp from "./components/SignUp.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,14 +25,12 @@ function App() {
 
           <Routes>
             <Route path="/about" element={<About />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/" element={<SampleText />} />
           </Routes>
 
-          <div className="content-container">
-            <Sidebar />
-            <main className="main-content">
-              {location.pathname !== "/about" && <SampleText />}
-            </main>
-          </div>
+          <Sidebar />
         </div>
       </div>
     </Router>

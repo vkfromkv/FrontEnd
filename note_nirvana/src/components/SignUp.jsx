@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import validator from "validator";
 import AuthContext from "./UserContext";
 import ShowPassword from "./ShowPassword";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const ctx = useContext(AuthContext);
@@ -10,6 +12,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [visible, setVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -20,8 +24,21 @@ const SignUp = () => {
         if (newPassword === confirmPassword) {
           setError("");
           // add email and password of a new user in database //
+          axios
+            .post("http://localhost:8081/register", {
+              username: newEmail,
+              password: newPassword,
+            })
+            .then((res) => {
+              if (res.data.Status === "Success") {
+                navigate("/login");
+              } else {
+                alert("Error");
+              }
+            })
+            .then((err) => console.log(err));
         } else {
-          setError("those passwords didn't match.Try again.");
+          setError("Passwords didn't match.Try again.");
         }
       }
     } else {

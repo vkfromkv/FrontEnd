@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 //As you are working on the file, You can choose to ignore this file.
-const SampleText = () => {
+function SampleText() {
   const sampleTexts = [
     "Hey There! Welcome to Note Nirvana!",
     "Hello, You must be a Musician",
@@ -18,6 +19,35 @@ const SampleText = () => {
     setText(sampleTexts[getRandomInt(sampleTexts.length)]);
   };
 
+  const [auth, setAuth] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [name, setName] = useState("");
+  axios.defaults.withCredentials = true;
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081")
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          setAuth(true);
+          setName(res.data.name);
+          navigate("/login");
+        } else {
+          setAuth(false);
+          setMsg(res.data.Error);
+        }
+      })
+      .catch((err) => {err});
+  }, []);
+
+  function handleDeleteToken() {
+    axios
+      .get("http://localhost:8081/logout")
+      .then((res) => {
+        location.reload(true);
+      })
+      .then((err) => console.log(err));
+  }
+
   return (
     <>
       <div className="container text-center my-5">
@@ -29,10 +59,20 @@ const SampleText = () => {
           Click Here
         </button>
         <br />
-        <h1>{text}</h1>
+        {auth ? (
+          <div>
+            <h3>You are Authorized {name}</h3>
+            <h1>{text}</h1>
+            <button className="btn btn-danger" onClick={handleDeleteToken}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <h1>{text}</h1>
+        )}
       </div>
     </>
   );
-};
+}
 
 export default SampleText;
