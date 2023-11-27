@@ -40,7 +40,7 @@ const SignIn = () => {
             }}
           ></input>
           <p className="text-danger small mb-3">{message}</p>
-          <ShowPassword />
+          <ShowPassword setVisible={setVisible} />
           <button
             type="submit"
             disabled={email.trim() === "" || password.trim() === ""}

@@ -12,7 +12,7 @@ function User(props) {
 
   return (
     <div
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)',}}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       className="h-100 w-100 d-flex p-3 gap-3 position-fixed top-0 start-0 justify-content-center align-items-center z-1 overflow-hidden bg-300"
     >
       <div
@@ -24,7 +24,9 @@ function User(props) {
             &times;
           </button>
         </div>
-        <div className="d-flex flex-column h-100 p-2">{ctx.hasAccount ? <SignIn /> : <SignUp />}</div>
+        <div className="d-flex flex-column h-100 p-2">
+          {ctx.hasAccount ? <SignIn /> : <SignUp />}
+        </div>
       </div>
     </div>
   );
