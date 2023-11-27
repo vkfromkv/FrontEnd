@@ -3,7 +3,7 @@ import React from "react";
 function About() {
   return (
     <div className="container text-left">
-      <div className="d-flex flex-column text-left mx-auto mt-5" style={{ maxWidth: "800px" }}>
+      <div>
         <h1>About Us</h1>
         <div className="mt-4">
           <p>

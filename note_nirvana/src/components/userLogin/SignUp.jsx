@@ -56,7 +56,7 @@ const SignUp = () => {
           }}
         ></input>
         <p className="text-danger small mb-3">{error}</p>
-        <ShowPassword />
+        <ShowPassword setVisible={setVisible} />
         <button
           type="submit"
           disabled={
