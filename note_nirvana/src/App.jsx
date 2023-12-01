@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./Pages/RootLayout";
 import About from "./Pages/About";
 import Publish from "./Pages/Publish";
-import ContactUs from "../Pages/ContactUs";
+import ContactUs from "./Pages/ContactUs";
 import { action as formAction } from "./Pages/Publish";
 
 function App() {
