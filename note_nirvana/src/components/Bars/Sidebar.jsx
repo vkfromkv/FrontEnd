@@ -9,6 +9,7 @@ function Sidebar() {
   const [hasAccount, setDoesnot] = useState(true);
   const [LoggedIn, setLoggedIn] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [user, setUser] = useState("Kaka");
 
   return (
     <AuthContext.Provider
@@ -43,8 +44,8 @@ function Sidebar() {
               <div className="spacer"></div>
             </li>
             <li className="nav-item text-center">
-              <a className="nav-link" href="#">
-                Forums
+              <a className="nav-link" href="/user_profile">
+                Hi, {user}
               </a>
             </li>
           </ul>
