@@ -25,7 +25,7 @@ function ContactUs() {
   <label htmlFor="message" style={{ marginBottom: '8px' }}>Message:</label>
   <textarea id="message" name="message" style={{ marginBottom: '15px' }}></textarea>
 
-  <button type="submit" style={{ marginBottom: '10px' }}>Send Message</button>
+  <button type="submit" className="btn btn-outline-primary">Send Message</button>
 </form>
 
         </div>
