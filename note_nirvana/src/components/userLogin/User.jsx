@@ -3,11 +3,11 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import AuthContext from "./UserContext";
 
-function User(props) {
+function User() {
   const ctx = useContext(AuthContext);
 
   const closeModal = () => {
-    props.closeModal(false);
+    ctx.setOpenModal(false);
   };
 
   return (

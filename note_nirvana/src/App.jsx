@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "../Pages/RootLayout";
-import About from "../Pages/About";
-import ContactUs from "../Pages/ContactUs";
 
+import RootLayout from "./Pages/RootLayout";
+import About from "./Pages/About";
+import Publish from "./Pages/Publish";
+import ContactUs from "../Pages/ContactUs";
+import { action as formAction } from "./Pages/Publish";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,9 +13,12 @@ function App() {
     {
       path: "/",
       element: <RootLayout></RootLayout>,
-      children: [{ path: "/about", element: <About></About> },
-      { path: "/contactus", element: <ContactUs></ContactUs> },
-    ],
+
+      children: [
+        { path: "/about", element: <About></About> },
+        { path: "/publish", element: <Publish></Publish>, action: formAction },
+        { path: "/contactus", element: <ContactUs></ContactUs> },
+      ],
     },
   ]);
   return <RouterProvider router={router}></RouterProvider>;
