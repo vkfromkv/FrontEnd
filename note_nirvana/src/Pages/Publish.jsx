@@ -20,7 +20,7 @@ const Publish = () => {
               <input
                 type="text"
                 name="Song"
-                class="form-control"
+                className="form-control"
                 placeholder="Song"
               />
             </div>
@@ -29,29 +29,29 @@ const Publish = () => {
           <div className="row mb-3">
             <div className="form-group col-3 md-4">
               <label className="mb-2">Tuning</label>
-              <select name="Tuning" class="form-control">
+              <select name="Tuning" className="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>
             </div>
             <div className="form-group col-3 md-4">
               <label className="mb-2">Capo</label>
-              <select name="Capo" class="form-control">
+              <select name="Capo" className="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>
             </div>
-            <div class="form-group col-3 md-4">
+            <div className="form-group col-3 md-4">
               <label className="mb-2 ">Key</label>
-              <select name="Key" class="form-control">
+              <select name="Key" className="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
               </select>
             </div>
           </div>
-          <div class="mb-2">
+          <div className="mb-2">
             <textarea
-              class="form-control w-75"
+              className="form-control w-75"
               id="exampleFormControlTextarea1"
               rows="20"
               placeholder="Enter your Tab Text"

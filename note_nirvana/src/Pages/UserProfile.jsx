@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Card,
   Button,
@@ -11,12 +11,14 @@ import {
 
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
+
   const [userData, setUserData] = useState({
-    fullName: "Kaka Garu",
-    email: "Kaka@gmail.com",
-    phone: "(239) 816-9029",
-    mobile: "(320) 380-4539",
-    address: "Fort Wayne, IN 46835",
+    Name: "Kaka Garu",
+    Email: "Kaka@gmail.com",
+    artist: null,
+    Instrument: null,
+    City: "Fort Wayne",
+    Country: "USA",
   });
 
   const handleEdit = () => {
@@ -24,7 +26,13 @@ const UserProfile = () => {
   };
 
   const handleInputChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    const { name, type, checked } = e.target;
+    const value = type === "checkbox" ? checked : e.target.value;
+  
+    setUserData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const saveChanges = () => {
@@ -32,7 +40,6 @@ const UserProfile = () => {
     setEditMode(false);
     console.log(userData);
   };
-
   const textColor = editMode ? "text-dark" : "text-secondary";
 
   return (
@@ -59,8 +66,8 @@ const UserProfile = () => {
                   width="150"
                 />
                 <div className="mt-3">
-                  <h4>Kaka</h4>
-                  <p className="text-secondary mb-1">Guitarist</p>
+                  <h4>{userData.Name && "Welcome, " + userData.Name}</h4>
+                  <p className="text-secondary mb-1">{userData.Instrument && "I play " + userData.Instrument + "!"}</p>
                   <p className="text-muted font-size-sm">
                     Fort Wayne, IN 46835
                   </p>
@@ -92,14 +99,41 @@ const UserProfile = () => {
                       {key.replace(/([A-Z])/g, " $1")}
                     </Form.Label>
                     <Col sm={9}>
-                      <Form.Control
-                        type="text"
-                        name={key}
-                        value={value}
-                        onChange={handleInputChange}
-                        readOnly={!editMode}
-                        className={`${textColor}`}
-                      />
+                      {key !== "artist" && key !== "Instrument" ? (
+                        <Form.Control
+                          type="text"
+                          name={key}
+                          value={value || ""}
+                          onChange={handleInputChange}
+                          className={`${textColor}`}
+                        />
+                      ) : key === "artist" ? (
+                        <Form.Check
+                          name={key}
+                          type="checkbox"
+                          label="Are you an Artist?"
+                          checked={value || false} // Use checked attribute for checkbox
+                          onChange={handleInputChange}
+                          disabled={!editMode}
+                        />
+                      ) : (
+                        key === "Instrument" && (
+                          <Form.Select
+                            name={key}
+                            checked={value || ""} // Default to empty string if null
+                            onChange={handleInputChange}
+                            disabled={!editMode}
+                            className={`${textColor}`}
+                          >
+                            {/* Example options, add more as needed */}
+                            <option value="">Select an instrument</option>
+                            <option value="guitar">Guitar</option>
+                            <option value="piano">Piano</option>
+                            <option value="violin">Violin</option>
+                            {/* ... other instrument options ... */}
+                          </Form.Select>
+                        )
+                      )}
                     </Col>
                   </Form.Group>
                 ))}
@@ -116,23 +150,6 @@ const UserProfile = () => {
               </Form>
             </Card.Body>
           </Card>
-
-          <Row className="gutters-sm">
-            <Col sm={6} className="mb-3">
-              <Card className="h-100">
-                <Card.Body>
-                  <h6 className="d-flex align-items-center mb-3">
-                    Instruments
-                  </h6>
-                  {/* Repeat the following structure for each project status */}
-                  <small>Web Design</small>
-                  <ProgressBar now={80} className="mb-3" />
-                  {/* ... other project statuses */}
-                </Card.Body>
-              </Card>
-            </Col>
-            {/* Repeat for other half if needed */}
-          </Row>
         </Col>
       </Row>
     </div>

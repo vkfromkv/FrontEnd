@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import validator from "validator";
 import AuthContext from "./UserContext";
 import ShowPassword from "./ShowPassword";
+import axios from "axios";
 
 const SignUp = () => {
   const ctx = useContext(AuthContext);
@@ -20,6 +21,21 @@ const SignUp = () => {
         if (newPassword === confirmPassword) {
           setError("");
           // add email and password of a new user in database //
+          console.log(newEmail + "  " + newPassword);
+          axios
+            .post("http://localhost:8081/User/Register", {
+              username: newEmail,
+              password: newPassword,
+            })
+            .then((res) => {
+              console.log(res);
+              if (res.data.message === "Created Successfully") {
+                console.log("Open login model")
+              } else {
+                alert("Error");
+              }
+            })
+            .then((err) => console.log(err));
         } else {
           setError("those passwords didn't match.Try again.");
         }
