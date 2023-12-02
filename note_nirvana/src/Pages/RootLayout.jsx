@@ -32,8 +32,8 @@ const RootLayout = () => {
             <Navbar />
           </div>
           <div style={{ display: "flex", flex: 1 }}>
-            { /* <UserSideBar></UserSideBar> */ }
-            <Sidebar></Sidebar>
+            {/* <UserSideBar></UserSideBar> */}
+            <Sidebar/>
             <main className="main-content col-md-10.5 p-5" style={{ flex: 1 }}>
               <Outlet></Outlet>
             </main>
