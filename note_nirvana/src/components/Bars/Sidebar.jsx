@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import "./Sidebar.css";
 
 import User from "../userLogin/User";
 
@@ -9,7 +10,7 @@ function Sidebar() {
   const ctx = useContext(AuthContext);
 
   return (
-    <nav className="sidebar col-md-1.5 d-none d-md-block bg-light">
+    <nav className="sidebar custom-sidebar d-none d-md-block bg-light">
       <div className="sidebar-sticky">
         <ul className="nav flex-column  pt-4">
           <li className="nav-item ">
