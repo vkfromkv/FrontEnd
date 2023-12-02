@@ -15,19 +15,24 @@ function ContactUs() {
           <p>
             Alternatively, you can use the form below to send us a message:
           </p>
-          <form style={{ display: 'flex', flexDirection: 'column', maxWidth: '400px', marginTop: '20px' }}>
-  <label htmlFor="name" style={{ marginBottom: '8px' }}>Name:</label>
-  <input type="text" id="name" name="name" style={{ marginBottom: '15px' }} />
 
-  <label htmlFor="email" style={{ marginBottom: '8px' }}>Email:</label>
-  <input type="email" id="email" name="email" style={{ marginBottom: '15px' }} />
-
-  <label htmlFor="message" style={{ marginBottom: '8px' }}>Message:</label>
-  <textarea id="message" name="message" style={{ marginBottom: '15px' }}></textarea>
-
-  <button type="submit" style={{ marginBottom: '10px' }}>Send Message</button>
+          <form className="row g-3">
+  <div className="col-md-6">
+    <label htmlFor="name" className="form-label">Name:</label>
+    <input type="text" id="name" name="name" className="form-control" />
+  </div>
+  <div className="col-md-6">
+    <label htmlFor="email" className="form-label">Email:</label>
+    <input type="email" id="email" name="email" className="form-control" />
+  </div>
+  <div className="col-12">
+    <label htmlFor="message" className="form-label">Message:</label>
+    <textarea id="message" name="message" className="form-control" rows="6"></textarea>
+  </div>
+  <div className="col-12">
+    <button type="submit" className="btn btn-primary">Send Message</button>
+  </div>
 </form>
-
         </div>
       </div>
     </div>

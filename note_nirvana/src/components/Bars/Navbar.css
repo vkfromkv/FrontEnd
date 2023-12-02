@@ -1,0 +1,12 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    border-radius: 20px;
+}
+
+.btn-outline-success {
+    border-radius: 50%;
+}

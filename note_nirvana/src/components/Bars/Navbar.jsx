@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import "./Navbar.css";
 
 function Navbar() {
+  const handleSearch = () => {
+    // Search logic here
+    console.log("Searching...");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
       <Link className="navbar-brand" to="/">
@@ -10,8 +18,8 @@ function Navbar() {
       <button
         className="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
@@ -21,7 +29,7 @@ function Navbar() {
       <div className="collapse navbar-collapse ms-5" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item active">
-            <Link className="nav-link" href="#">
+            <Link className="nav-link" to="#">
               List of Chords
             </Link>
           </li>
@@ -31,11 +39,31 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link" to="/contactus">
+            <Link className="nav-link" to="/contactus">
               Contact Us
             </Link>
           </li>
         </ul>
+        <div className="ms-auto" style={{ maxWidth: "500px" }}>
+          <div className="input-group">
+          <input
+  className="form-control"
+  type="search"
+  placeholder="Search"
+  aria-label="Search"
+  style={{ borderRadius: "20px", height: "40px", width: "300px", padding: "10px" }}
+/>
+            <div className="input-group-append">
+              <button
+  className="btn btn-outline-success rounded-circle"
+  type="button"
+  onClick={handleSearch}
+>
+  <FontAwesomeIcon icon={faSearch} />
+</button>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
