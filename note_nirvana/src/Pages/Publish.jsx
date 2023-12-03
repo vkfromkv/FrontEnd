@@ -1,6 +1,17 @@
-import React from "react";
-import { Form, redirect } from "react-router-dom";
+import React, { useContext } from "react";
+import { Form, useNavigate } from "react-router-dom";
+
+import AuthContext from "../components/userLogin/UserContext";
+
 const Publish = () => {
+  const ctx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (!ctx.isAuthenticated) {
+    navigate("/");
+    return null;
+  }
+
   return (
     <>
       <div>

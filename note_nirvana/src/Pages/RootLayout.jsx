@@ -11,7 +11,7 @@ const RootLayout = () => {
   const [userEmail, setEmail] = useState("nikhilpittala7");
   const [LoggedIn, setLoggedIn] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [isAuthencated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const[user,setUser] = useState(null);
 
@@ -45,6 +45,7 @@ const RootLayout = () => {
           setOpenModal: setOpenModal,
           userEmail: userEmail,
           setEmail: setEmail,
+          isAuthenticated: isAuthenticated,
         }}
       >
         <div
@@ -54,7 +55,7 @@ const RootLayout = () => {
             <Navbar />
           </div>
           <div style={{ display: "flex", flex: 1 }}>
-            {isAuthencated ? <UserSideBar user = {user}/> : <Sidebar />}
+            {isAuthenticated ? <UserSideBar user = {user}/> : <Sidebar />}
             <main className="main-content col-md-10.5 p-5" style={{ flex: 1 }}>
               <Outlet></Outlet>
             </main>
