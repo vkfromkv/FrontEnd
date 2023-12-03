@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import validator from "validator";
 import AuthContext from "./UserContext";
 import ShowPassword from "./ShowPassword";
+import axios from "axios";
 
 const SignIn = () => {
   const ctx = useContext(AuthContext);
@@ -9,13 +10,31 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
   const [visible, setVisible] = useState(false);
+
   const submitHandler = (event) => {
     event.preventDefault();
     if (validator.isEmail(email) == true && password.trim().length > 8) {
       setMessage("");
       // check if the email and password are of an existing user and change their status to loggedin//
+      axios
+        .post("http://localhost:8081/Authentication/Login", {
+          username: email,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 202) {
+            setMessage("");
+            ctx.setOpenModal(false);
+          } else {
+            setMessage(res.data);
+          }
+        })
+        .catch(() => {
+          setMessage("An error occurred. Please check your password and email and try again.");
+        });
     } else {
-      setMessage("Please check your password and email and try again.");
+      setMessage("Please enter a valid email and password (at least 8 characters).");
     }
   };
   return (

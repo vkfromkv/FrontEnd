@@ -29,8 +29,8 @@ const SignUp = () => {
             })
             .then((res) => {
               console.log(res);
-              if (res.data.message === "Created Successfully") {
-                console.log("Open login model")
+              if (res.status === 201) {
+                ctx.setDoesnot(true);
               } else {
                 alert("Error");
               }
