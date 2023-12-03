@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { createClient } from "@supabase/supabase-js";
 import "./Navbar.css";
 
+const supabaseUrl = "SUPABASE_URL";
+const supabaseKey = "SUPABASE_API_KEY";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 function Navbar() {
-  const handleSearch = () => {
-    // Search logic here
-    console.log("Searching...");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      // Make a request to search for data
+      const { data, error } = await supabase
+        .from("table_name")
+        .select("*")
+        .ilike("column_to_search", `%${searchTerm}%`);
+
+      if (error) {
+        console.error("Error fetching data", error.message);
+        return;
+      }
+
+      // Update the search results state with the fetched data
+      setSearchResults(data || []);
+    } catch (error) {
+      console.error("Error handling search:", error.message);
+    }
   };
+
+  useEffect(() => {
+    // Log of the search results
+    console.log("Search Results:", searchResults);
+  }, [searchResults]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
