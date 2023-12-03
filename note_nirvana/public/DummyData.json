@@ -1,0 +1,13 @@
+{
+    "songs": [
+      {
+        "title": "Song 1",
+        "difficulty": "Intermediate",
+        "tuning": "Standard",
+        "key": "C Major",
+        "capo": 2,
+        "author": "John Doe",
+        "Lyrics": "This is the first song. It's a great song."
+      }
+    ]
+  }
