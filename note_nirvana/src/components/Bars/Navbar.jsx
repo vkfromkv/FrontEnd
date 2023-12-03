@@ -5,38 +5,28 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { createClient } from "@supabase/supabase-js";
 import "./Navbar.css";
 
-const supabaseUrl = "https://uvowpbczwgkchgpxegqp.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2b3dwYmN6d2drY2hncHhlZ3FwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDExMzMwNjcsImV4cCI6MjAxNjcwOTA2N30.P5tFs7zJi5oesH4C-d53_2cBtD_JxfUlrb0RIhBML1w";
+const supabaseUrl = "https://zidvnydkwaqcjwcotqkh.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppZHZueWRrd2FxY2p3Y290cWtoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMTU4NDMyMCwiZXhwIjoyMDE3MTYwMzIwfQ.Xi-3TyRQtV8WfeMIBz7ojwJA3TvcTrxk6bQgCrefpsY";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function Navbar() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-
-  const handleSearch = async () => {
-    try {
-      // Make a request to search for data
-      const { data, error } = await supabase
-        .from("table_name")
-        .select("*")
-        .ilike("column_to_search", `%${searchTerm}%`);
-
-      if (error) {
-        console.error("Error fetching data", error.message);
-        return;
-      }
-
-      // Update the search results state with the fetched data
-      setSearchResults(data || []);
-    } catch (error) {
-      console.error("Error handling search:", error.message);
-    }
-  };
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Log of the search results
-    console.log("Search Results:", searchResults);
-  }, [searchResults]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('api/search');
+        const responseData = await response.json();
+
+        setData(responseData || []);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light p-2">
@@ -85,7 +75,7 @@ function Navbar() {
               <button
   className="btn btn-outline-success rounded-circle"
   type="button"
-  onClick={handleSearch}
+  //onClick={handleSearch}
 >
   <FontAwesomeIcon icon={faSearch} />
 </button>
