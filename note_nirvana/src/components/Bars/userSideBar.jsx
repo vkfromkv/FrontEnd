@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../userLogin/UserContext";
 import axios from "axios";
-const UserSideBar = ({ user }) => {
+const UserSideBar = ({ user, userId }) => {
   const ctx = useContext(AuthContext);
 
   axios.defaults.withCredentials = true;
@@ -11,6 +11,7 @@ const UserSideBar = ({ user }) => {
       .get("http://localhost:8081/Authentication/Logout")
       .then((res) => {
         console.log(res);
+        ctx.setUserId(null);
         window.location.reload();
       })
       .then((err) => console.log(err));
@@ -30,7 +31,7 @@ const UserSideBar = ({ user }) => {
           </li>
           <li className="nav-item text-center p-0">
             <Link className="nav-link" to="/publish">
-              +Publish Tab
+            +Publish Tab
             </Link>
           </li>
           <li className="nav-item text-center mt-5">

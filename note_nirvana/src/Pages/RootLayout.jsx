@@ -8,12 +8,14 @@ import axios from "axios";
 
 const RootLayout = () => {
   const [hasAccount, setDoesnot] = useState(true);
-  const [userEmail, setEmail] = useState("nikhilpittala7");
+  const [userEmail, setEmail] = useState("");
   const [LoggedIn, setLoggedIn] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-  const[user,setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  
 
   axios.defaults.withCredentials = true;
   useEffect(() => {
@@ -46,6 +48,8 @@ const RootLayout = () => {
           userEmail: userEmail,
           setEmail: setEmail,
           isAuthenticated: isAuthenticated,
+          userId: userId,
+          setUserId: setUserId,
         }}
       >
         <div
@@ -55,7 +59,7 @@ const RootLayout = () => {
             <Navbar />
           </div>
           <div style={{ display: "flex", flex: 1 }}>
-            {isAuthenticated ? <UserSideBar user = {user}/> : <Sidebar />}
+            {isAuthenticated ? <UserSideBar user={user} userId = {userId} /> : <Sidebar />}
             <main className="main-content col-md-10.5 p-5" style={{ flex: 1 }}>
               <Outlet></Outlet>
             </main>
