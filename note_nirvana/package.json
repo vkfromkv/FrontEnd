@@ -22,6 +22,7 @@
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
+    "supabase": "^1.115.4",
     "validator": "^13.11.0"
   },
   "devDependencies": {

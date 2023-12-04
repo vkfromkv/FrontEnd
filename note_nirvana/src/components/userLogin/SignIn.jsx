@@ -26,7 +26,6 @@ const SignIn = () => {
           if (res.status === 202) {
             setMessage("");
             ctx.setOpenModal(false);
-            window.location.reload();
           } else {
             setMessage(res.data);
           }
