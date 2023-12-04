@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Button,
@@ -9,18 +9,32 @@ import {
   Form,
 } from "react-bootstrap";
 import axios from "axios";
+import UserProfileForm from "../components/UserProfile/UserProfileForm";
 
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
+  const [userData, setUserData] = useState({});
 
-  const [userData, setUserData] = useState({
-    name: "Kaka Garu",
-    username: "kaka@gmail.com",
-    artist: true,
-    instrument: null,
-    city: "Fort Wayne",
-    country: "USA",
-  });
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  axios.defaults.withCredentials = true;
+  const fetchUserData = async () => {
+    axios
+      .get("http://localhost:8081/User/GetUserProfile")
+      .then((res) => {
+        console.log(res);
+        if (res.data.status === 200 && res.data) {
+          setUserData(res.data.data);
+        } else {
+          console.error("Failed to fetch user data:", res);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during the fetch operation:", error);
+      });
+  };
 
   const handleEdit = () => {
     setEditMode(!editMode);
@@ -39,21 +53,21 @@ const UserProfile = () => {
   const saveChanges = () => {
     let isValid = true;
     let errorMessage = "";
-  
+
     // Loop through each field to check if it's filled
     Object.entries(userData).forEach(([key, value]) => {
-      if (!value && key !== "artist") { // Assuming 'artist' is a checkbox and might be false
+      console.log(key);
+      if (!value && key !== "is_artist") {
         isValid = false;
         errorMessage += `Please fill in the ${key} field.\n`;
       }
     });
-  
-    // If not valid, show the error message and stop the function
+
     if (!isValid) {
       alert(errorMessage);
       return;
     }
-  
+
     // Proceed with saving changes if all fields are valid
     axios
       .post("http://localhost:8081/User/UpdateUserProfile", userData)
@@ -69,7 +83,7 @@ const UserProfile = () => {
         alert("Error during save operation");
       });
   };
-  
+
   const textColor = editMode ? "text-dark" : "text-secondary";
 
   return (
@@ -120,64 +134,13 @@ const UserProfile = () => {
         <Col md={8}>
           <Card className="mb-3">
             <Card.Body>
-              <Form>
-                {Object.entries(userData).map(([key, value]) => (
-                  <Form.Group as={Row} className="mb-3" key={key}>
-                    <Form.Label column sm={3} className="text-capitalize">
-                      {key.replace(/([A-Z])/g, " $1")}
-                    </Form.Label>
-                    <Col sm={9}>
-                      {key !== "artist" && key !== "Instrument" ? (
-                        <Form.Control
-                          type="text"
-                          name={key}
-                          value={value || ""}
-                          onChange={handleInputChange}
-                          className={`${textColor}`}
-                          readOnly={!editMode}
-                          required
-                        />
-                      ) : key === "artist" ? (
-                        <Form.Check
-                          name={key}
-                          type="checkbox"
-                          label="Are you an Artist?"
-                          checked={value || false} // Use checked attribute for checkbox
-                          onChange={handleInputChange}
-                          disabled={!editMode}
-                        />
-                      ) : (
-                        key === "Instrument" && (
-                          <Form.Select
-                            name={key}
-                            checked={value || ""}
-                            onChange={handleInputChange}
-                            disabled={!editMode}
-                            aria-readonly={!editMode}
-                            className={`${textColor}`}
-                            required
-                          >
-                            <option value="">Select an instrument</option>
-                            <option value="Guitar">Guitar</option>
-                            <option value="Piano">Piano</option>
-                            <option value="Violin">Violin</option>
-                          </Form.Select>
-                        )
-                      )}
-                    </Col>
-                  </Form.Group>
-                ))}
-                <hr />
-                {editMode ? (
-                  <Button variant="success" onClick={saveChanges}>
-                    Save Changes
-                  </Button>
-                ) : (
-                  <Button variant="info" onClick={handleEdit}>
-                    Edit
-                  </Button>
-                )}
-              </Form>
+              <UserProfileForm
+                userData={userData}
+                handleInputChange={handleInputChange}
+                editMode={editMode}
+                saveChanges={saveChanges}
+                handleEdit={handleEdit}
+              />
             </Card.Body>
           </Card>
         </Col>
