@@ -1,6 +1,7 @@
 import React from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useLoaderData } from "react-router-dom";
 const Publish = () => {
+  const data = useLoaderData();
   return (
     <>
       <div>
