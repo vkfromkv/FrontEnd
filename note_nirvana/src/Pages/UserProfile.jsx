@@ -8,17 +8,18 @@ import {
   Col,
   Form,
 } from "react-bootstrap";
+import axios from "axios";
 
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [userData, setUserData] = useState({
-    Name: "Kaka Garu",
-    Email: "Kaka@gmail.com",
-    artist: null,
-    Instrument: null,
-    City: "Fort Wayne",
-    Country: "USA",
+    name: "Kaka Garu",
+    username: "kaka@gmail.com",
+    artist: true,
+    instrument: null,
+    city: "Fort Wayne",
+    country: "USA",
   });
 
   const handleEdit = () => {
@@ -28,7 +29,7 @@ const UserProfile = () => {
   const handleInputChange = (e) => {
     const { name, type, checked } = e.target;
     const value = type === "checkbox" ? checked : e.target.value;
-  
+
     setUserData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -36,10 +37,39 @@ const UserProfile = () => {
   };
 
   const saveChanges = () => {
-    // Handle saving changes here
-    setEditMode(false);
-    console.log(userData);
+    let isValid = true;
+    let errorMessage = "";
+  
+    // Loop through each field to check if it's filled
+    Object.entries(userData).forEach(([key, value]) => {
+      if (!value && key !== "artist") { // Assuming 'artist' is a checkbox and might be false
+        isValid = false;
+        errorMessage += `Please fill in the ${key} field.\n`;
+      }
+    });
+  
+    // If not valid, show the error message and stop the function
+    if (!isValid) {
+      alert(errorMessage);
+      return;
+    }
+  
+    // Proceed with saving changes if all fields are valid
+    axios
+      .post("http://localhost:8081/User/UpdateUserProfile", userData)
+      .then((res) => {
+        if (res.status === 201) {
+          setEditMode(false);
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error during save operation");
+      });
   };
+  
   const textColor = editMode ? "text-dark" : "text-secondary";
 
   return (
@@ -66,10 +96,13 @@ const UserProfile = () => {
                   width="150"
                 />
                 <div className="mt-3">
-                  <h4>{userData.Name && "Welcome, " + userData.Name}</h4>
-                  <p className="text-secondary mb-1">{userData.Instrument && "I play " + userData.Instrument + "!"}</p>
+                  <h4>{userData.name && "Welcome, " + userData.name}</h4>
+                  <p className="text-secondary mb-1">
+                    {userData.instrument &&
+                      "I play " + userData.instrument + "!"}
+                  </p>
                   <p className="text-muted font-size-sm">
-                    Fort Wayne, IN 46835
+                    {userData.city + ", " + userData.country}
                   </p>
                 </div>
               </div>
@@ -77,15 +110,10 @@ const UserProfile = () => {
           </Card>
           <Card className="mt-3">
             <ListGroup variant="flush">
-              {/* Repeat the following structure for each list item */}
               <ListGroup.Item className="d-flex justify-content-between align-items-center flex-wrap">
-                <h6 className="mb-0">
-                  {/* SVG Icon */}
-                  Website
-                </h6>
+                <h6 className="mb-0">Website</h6>
                 <span className="text-secondary">https://NoteNirava.com</span>
               </ListGroup.Item>
-              {/* ... other list items */}
             </ListGroup>
           </Card>
         </Col>
@@ -106,6 +134,8 @@ const UserProfile = () => {
                           value={value || ""}
                           onChange={handleInputChange}
                           className={`${textColor}`}
+                          readOnly={!editMode}
+                          required
                         />
                       ) : key === "artist" ? (
                         <Form.Check
@@ -120,17 +150,17 @@ const UserProfile = () => {
                         key === "Instrument" && (
                           <Form.Select
                             name={key}
-                            checked={value || ""} // Default to empty string if null
+                            checked={value || ""}
                             onChange={handleInputChange}
                             disabled={!editMode}
+                            aria-readonly={!editMode}
                             className={`${textColor}`}
+                            required
                           >
-                            {/* Example options, add more as needed */}
                             <option value="">Select an instrument</option>
-                            <option value="guitar">Guitar</option>
-                            <option value="piano">Piano</option>
-                            <option value="violin">Violin</option>
-                            {/* ... other instrument options ... */}
+                            <option value="Guitar">Guitar</option>
+                            <option value="Piano">Piano</option>
+                            <option value="Violin">Violin</option>
                           </Form.Select>
                         )
                       )}
