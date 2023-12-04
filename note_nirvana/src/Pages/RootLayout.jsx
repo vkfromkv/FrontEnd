@@ -13,7 +13,7 @@ const RootLayout = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const[user,setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   axios.defaults.withCredentials = true;
   useEffect(() => {
@@ -46,6 +46,8 @@ const RootLayout = () => {
           userEmail: userEmail,
           setEmail: setEmail,
           isAuthenticated: isAuthenticated,
+          // searchSong: searchSong,
+          // setSong: setSong,
         }}
       >
         <div
@@ -55,7 +57,7 @@ const RootLayout = () => {
             <Navbar />
           </div>
           <div style={{ display: "flex", flex: 1 }}>
-            {isAuthenticated ? <UserSideBar user = {user}/> : <Sidebar />}
+            {isAuthenticated ? <UserSideBar user={user} /> : <Sidebar />}
             <main className="main-content col-md-10.5 p-5" style={{ flex: 1 }}>
               <Outlet></Outlet>
             </main>

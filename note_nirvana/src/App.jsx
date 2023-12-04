@@ -8,6 +8,12 @@ import ContactUs from "./Pages/ContactUs";
 import { action as formAction } from "./Pages/Publish";
 import Lyrics from "./Pages/Lyrics";
 import UserProfile from "./Pages/UserProfile";
+import Homepage from "./Pages/Homepage";
+import Chords from "./Pages/Chords";
+import { loader as filterLoader } from "./components/carousel/FilterBar";
+import { loader as publishLoader } from "./Pages/Publish";
+import { loader as HomeLoader } from "./Pages/Homepage";
+
 function App() {
   const [count, setCount] = useState(0);
   const router = createBrowserRouter([
@@ -15,11 +21,18 @@ function App() {
       path: "/",
       element: <RootLayout></RootLayout>,
       children: [
+        { path: "/", element: <Homepage></Homepage>, loader: HomeLoader },
         { path: "/about", element: <About></About> },
-        { path: "/publish", element: <Publish></Publish>, action: formAction },
+        {
+          path: "/publish",
+          element: <Publish></Publish>,
+          action: formAction,
+          loader: publishLoader,
+        },
         { path: "/contactus", element: <ContactUs></ContactUs> },
         { path: "/user_profile", element: <UserProfile /> },
-        {path:"/chords/lyrics", element: <Lyrics></Lyrics>}
+        { path: "/chords/lyrics/:id", element: <Lyrics></Lyrics> },
+        { path: "/chords", element: <Chords></Chords>, loader: filterLoader },
       ],
     },
   ]);

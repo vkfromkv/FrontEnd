@@ -1,17 +1,6 @@
-import React, { useContext } from "react";
-import { Form, useNavigate } from "react-router-dom";
-
-import AuthContext from "../components/userLogin/UserContext";
-
+import React from "react";
+import { Form, redirect } from "react-router-dom";
 const Publish = () => {
-  const ctx = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  if (!ctx.isAuthenticated) {
-    navigate("/");
-    return null;
-  }
-
   return (
     <>
       <div>
@@ -35,6 +24,15 @@ const Publish = () => {
                 placeholder="Song"
               />
             </div>
+            <div className="form-group col-3 md-4">
+              <label className="mb-2">Genre</label>
+              <select name="Genre" class="form-control">
+                <option selected>Choose...</option>
+                {data.genres.map((e) => (
+                  <option key={e}>{e}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="row mb-3">
@@ -42,29 +40,44 @@ const Publish = () => {
               <label className="mb-2">Tuning</label>
               <select name="Tuning" className="form-control">
                 <option selected>Choose...</option>
-                <option>...</option>
+                {data.TuningList.map((e) => (
+                  <option key={e}>{e}</option>
+                ))}
               </select>
             </div>
             <div className="form-group col-3 md-4">
               <label className="mb-2">Capo</label>
               <select name="Capo" className="form-control">
                 <option selected>Choose...</option>
-                <option>...</option>
+                {data.capoList.map((e) => (
+                  <option key={e}>{e}</option>
+                ))}
               </select>
             </div>
             <div className="form-group col-3 md-4">
               <label className="mb-2 ">Key</label>
               <select name="Key" className="form-control">
                 <option selected>Choose...</option>
-                <option>...</option>
+                {data.songKeys.map((e) => (
+                  <option key={e}>{e}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group col-3 md-4">
+              <label className="mb-2">Time Signature</label>
+              <select name="TimeSignature" class="form-control">
+                <option selected>Choose...</option>
+                {data.timeSignatures.map((e) => (
+                  <option key={e}>{e}</option>
+                ))}
               </select>
             </div>
           </div>
-          <div className="mb-2">
+          <div class="mb-2">
             <textarea
-              className="form-control w-75"
+              class="form-control w-75"
               id="exampleFormControlTextarea1"
-              rows="20"
+              rows="15"
               placeholder="Enter your Tab Text"
               name="Tabtext"
             ></textarea>
@@ -81,12 +94,28 @@ export default Publish;
 
 export async function action({ request, params }) {
   const data = await request.formData();
+  const lines = data.get("Tabtext");
+  const line = lines.split("\n");
+
   const formData = {
     artist: data.get("Artist"),
-    song: data.get("Song"),
+    title: data.get("Song"),
     tuning: data.get("Tuning"),
-    Tabtext: data.get("Tabtext"),
+    lyrics: line,
+    capo: data.get("Capo"),
+    key: data.get("Key"),
+    genre: data.get("Genre"),
+    timeSignature: data.get("TimeSignature"),
   };
+
   console.log(formData);
   return redirect("/publish");
+}
+export async function loader() {
+  const response = await fetch(
+    "http://localhost:8081/Lyrics/GetDropDownDataForPublication"
+  );
+  const resData = response.json();
+
+  return resData;
 }
