@@ -23,7 +23,7 @@ const SignIn = () => {
         })
         .then((res) => {
           console.log(res);
-          if (res.data.status === 202) {
+          if (res.status === 202) {
             setMessage("");
             ctx.setUserId(res.data.userId);
             ctx.setOpenModal(false);
@@ -37,7 +37,7 @@ const SignIn = () => {
           setMessage(
             "An error occurred. Please check your password and email and try again."
           );
-        })
+        });
     } else {
       setMessage(
         "Please enter a valid email and password (at least 8 characters)."
