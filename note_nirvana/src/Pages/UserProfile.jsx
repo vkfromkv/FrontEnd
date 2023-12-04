@@ -116,7 +116,9 @@ const UserProfile = () => {
                       "I play " + userData.instrument + "!"}
                   </p>
                   <p className="text-muted font-size-sm">
-                    {userData.city + ", " + userData.country}
+                    {userData.city && userData.country
+                      ? userData.city + ", " + userData.country
+                      : ""}
                   </p>
                 </div>
               </div>

@@ -14,9 +14,9 @@ function Sidebar() {
     <nav className="sidebar custom-sidebar d-none d-md-block bg-light">
       <div className="sidebar-sticky">
         <ul className="nav flex-column  pt-4">
-          <li className="nav-item ">
+          <li className="nav-item ps-3 ">
             <button
-              className="btn btn-primary w-100"
+              className="btn btn-primary w-75"
               type="submit"
               onClick={() => {
                 ctx.setOpenModal(true);
@@ -28,11 +28,6 @@ function Sidebar() {
           </li>
           <li className="nav-item">
             <div className="spacer"></div>
-          </li>
-          <li className="nav-item text-center">
-            <a className="nav-link" href="/user_profile">
-              Hi, {user}
-            </a>
           </li>
         </ul>
       </div>
