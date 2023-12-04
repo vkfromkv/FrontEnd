@@ -23,19 +23,25 @@ const SignIn = () => {
         })
         .then((res) => {
           console.log(res);
-          if (res.status === 202) {
+          if (res.data.status === 202) {
             setMessage("");
+            ctx.setUserId(res.data.userId);
             ctx.setOpenModal(false);
             window.location.reload();
           } else {
+            console.log(res);
             setMessage(res.data);
           }
         })
         .catch(() => {
-          setMessage("An error occurred. Please check your password and email and try again.");
-        });
+          setMessage(
+            "An error occurred. Please check your password and email and try again."
+          );
+        })
     } else {
-      setMessage("Please enter a valid email and password (at least 8 characters).");
+      setMessage(
+        "Please enter a valid email and password (at least 8 characters)."
+      );
     }
   };
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Button,
@@ -8,18 +8,33 @@ import {
   Col,
   Form,
 } from "react-bootstrap";
+import axios from "axios";
+import UserProfileForm from "../components/UserProfile/UserProfileForm";
 
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
+  const [userData, setUserData] = useState({});
 
-  const [userData, setUserData] = useState({
-    Name: "Kaka Garu",
-    Email: "Kaka@gmail.com",
-    artist: null,
-    Instrument: null,
-    City: "Fort Wayne",
-    Country: "USA",
-  });
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  axios.defaults.withCredentials = true;
+  const fetchUserData = async () => {
+    axios
+      .get("http://localhost:8081/User/GetUserProfile")
+      .then((res) => {
+        console.log(res);
+        if (res.data.status === 200 && res.data) {
+          setUserData(res.data.data);
+        } else {
+          console.error("Failed to fetch user data:", res);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during the fetch operation:", error);
+      });
+  };
 
   const handleEdit = () => {
     setEditMode(!editMode);
@@ -28,7 +43,7 @@ const UserProfile = () => {
   const handleInputChange = (e) => {
     const { name, type, checked } = e.target;
     const value = type === "checkbox" ? checked : e.target.value;
-  
+
     setUserData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -36,10 +51,39 @@ const UserProfile = () => {
   };
 
   const saveChanges = () => {
-    // Handle saving changes here
-    setEditMode(false);
-    console.log(userData);
+    let isValid = true;
+    let errorMessage = "";
+
+    // Loop through each field to check if it's filled
+    Object.entries(userData).forEach(([key, value]) => {
+      console.log(key);
+      if (!value && key !== "is_artist") {
+        isValid = false;
+        errorMessage += `Please fill in the ${key} field.\n`;
+      }
+    });
+
+    if (!isValid) {
+      alert(errorMessage);
+      return;
+    }
+
+    // Proceed with saving changes if all fields are valid
+    axios
+      .post("http://localhost:8081/User/UpdateUserProfile", userData)
+      .then((res) => {
+        if (res.status === 201) {
+          setEditMode(false);
+        } else {
+          alert("Error");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error during save operation");
+      });
   };
+
   const textColor = editMode ? "text-dark" : "text-secondary";
 
   return (
@@ -66,10 +110,13 @@ const UserProfile = () => {
                   width="150"
                 />
                 <div className="mt-3">
-                  <h4>{userData.Name && "Welcome, " + userData.Name}</h4>
-                  <p className="text-secondary mb-1">{userData.Instrument && "I play " + userData.Instrument + "!"}</p>
+                  <h4>{userData.name && "Welcome, " + userData.name}</h4>
+                  <p className="text-secondary mb-1">
+                    {userData.instrument &&
+                      "I play " + userData.instrument + "!"}
+                  </p>
                   <p className="text-muted font-size-sm">
-                    Fort Wayne, IN 46835
+                    {userData.city + ", " + userData.country}
                   </p>
                 </div>
               </div>
@@ -77,77 +124,23 @@ const UserProfile = () => {
           </Card>
           <Card className="mt-3">
             <ListGroup variant="flush">
-              {/* Repeat the following structure for each list item */}
               <ListGroup.Item className="d-flex justify-content-between align-items-center flex-wrap">
-                <h6 className="mb-0">
-                  {/* SVG Icon */}
-                  Website
-                </h6>
+                <h6 className="mb-0">Website</h6>
                 <span className="text-secondary">https://NoteNirava.com</span>
               </ListGroup.Item>
-              {/* ... other list items */}
             </ListGroup>
           </Card>
         </Col>
         <Col md={8}>
           <Card className="mb-3">
             <Card.Body>
-              <Form>
-                {Object.entries(userData).map(([key, value]) => (
-                  <Form.Group as={Row} className="mb-3" key={key}>
-                    <Form.Label column sm={3} className="text-capitalize">
-                      {key.replace(/([A-Z])/g, " $1")}
-                    </Form.Label>
-                    <Col sm={9}>
-                      {key !== "artist" && key !== "Instrument" ? (
-                        <Form.Control
-                          type="text"
-                          name={key}
-                          value={value || ""}
-                          onChange={handleInputChange}
-                          className={`${textColor}`}
-                        />
-                      ) : key === "artist" ? (
-                        <Form.Check
-                          name={key}
-                          type="checkbox"
-                          label="Are you an Artist?"
-                          checked={value || false} // Use checked attribute for checkbox
-                          onChange={handleInputChange}
-                          disabled={!editMode}
-                        />
-                      ) : (
-                        key === "Instrument" && (
-                          <Form.Select
-                            name={key}
-                            checked={value || ""} // Default to empty string if null
-                            onChange={handleInputChange}
-                            disabled={!editMode}
-                            className={`${textColor}`}
-                          >
-                            {/* Example options, add more as needed */}
-                            <option value="">Select an instrument</option>
-                            <option value="guitar">Guitar</option>
-                            <option value="piano">Piano</option>
-                            <option value="violin">Violin</option>
-                            {/* ... other instrument options ... */}
-                          </Form.Select>
-                        )
-                      )}
-                    </Col>
-                  </Form.Group>
-                ))}
-                <hr />
-                {editMode ? (
-                  <Button variant="success" onClick={saveChanges}>
-                    Save Changes
-                  </Button>
-                ) : (
-                  <Button variant="info" onClick={handleEdit}>
-                    Edit
-                  </Button>
-                )}
-              </Form>
+              <UserProfileForm
+                userData={userData}
+                handleInputChange={handleInputChange}
+                editMode={editMode}
+                saveChanges={saveChanges}
+                handleEdit={handleEdit}
+              />
             </Card.Body>
           </Card>
         </Col>
