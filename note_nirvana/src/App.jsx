@@ -6,6 +6,7 @@ import About from "./Pages/About";
 import Publish from "./Pages/Publish";
 import ContactUs from "./Pages/ContactUs";
 import { action as formAction } from "./Pages/Publish";
+import Lyrics from "./Pages/Lyrics";
 import UserProfile from "./Pages/UserProfile";
 function App() {
   const [count, setCount] = useState(0);
@@ -18,6 +19,7 @@ function App() {
         { path: "/publish", element: <Publish></Publish>, action: formAction },
         { path: "/contactus", element: <ContactUs></ContactUs> },
         { path: "/user_profile", element: <UserProfile /> },
+        {path:"/chords/lyrics", element: <Lyrics></Lyrics>}
       ],
     },
   ]);
