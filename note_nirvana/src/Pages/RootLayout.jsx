@@ -12,6 +12,7 @@ const RootLayout = () => {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [chords, setChords] = useState({});
 
   const [user, setUser] = useState(null);
 
@@ -46,6 +47,8 @@ const RootLayout = () => {
           userEmail: userEmail,
           setEmail: setEmail,
           isAuthenticated: isAuthenticated,
+          setChords: setChords,
+          chords: chords,
           // searchSong: searchSong,
           // setSong: setSong,
         }}

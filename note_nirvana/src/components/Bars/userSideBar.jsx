@@ -6,7 +6,7 @@ const UserSideBar = ({ user }) => {
   const ctx = useContext(AuthContext);
 
   axios.defaults.withCredentials = true;
-  const handleDeleteToken= () =>  {
+  const handleDeleteToken = () => {
     axios
       .get("http://localhost:8081/Authentication/Logout")
       .then((res) => {
@@ -14,15 +14,18 @@ const UserSideBar = ({ user }) => {
         window.location.reload();
       })
       .then((err) => console.log(err));
-  }
+  };
 
   return (
-    <nav className="col-md-1.5 d-none d-md-block bg-light sidebar">
+    <nav
+      className="col-md-1.5 d-none d-md-block bg-light sidebar"
+      style={{ maxWidth: "150px" }}
+    >
       <div className="sidebar-sticky">
         <ul className="nav flex-column  pt-4">
-          <li className="nav-item text-center">
+          <li className="nav-item text-center" style={{ maxWidth: "150px" }}>
             <Link className="nav-link" to="/user_profile">
-              {user}
+              {user.split("@")[0]}
             </Link>
           </li>
           <li className="nav-item">

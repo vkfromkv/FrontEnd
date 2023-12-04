@@ -32,7 +32,11 @@ function App() {
         { path: "/contactus", element: <ContactUs></ContactUs> },
         { path: "/user_profile", element: <UserProfile /> },
         { path: "/chords/lyrics/:id", element: <Lyrics></Lyrics> },
-        { path: "/chords", element: <Chords></Chords>, loader: filterLoader },
+        {
+          path: "/chords",
+          element: <Chords></Chords>,
+          loader: filterLoader,
+        },
       ],
     },
   ]);

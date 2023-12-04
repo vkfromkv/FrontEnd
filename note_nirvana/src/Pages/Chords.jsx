@@ -1,26 +1,33 @@
-import { Link, useActionData } from "react-router-dom";
+import { Link, useActionData, useParams } from "react-router-dom";
 import Filter from "../components/carousel/FilterBar";
 import { useState, useEffect } from "react";
+import AuthContext from "../components/userLogin/UserContext";
+import { useContext } from "react";
 
 const Chords = () => {
   const [filter, setFilter] = useState({});
   const [data, setData] = useState([]);
+  const ctx = useContext(AuthContext);
+  const newFilter = ctx.chords;
 
   const fetchData = async () => {
     try {
+      const requestFilter =
+        Object.keys(newFilter).length !== 0 ? newFilter : filter;
+      console.log(requestFilter);
       const response = await fetch(
         "http://localhost:8081/Lyrics/GetSongsList/",
         {
           method: "POST",
-          body: JSON.stringify(filter),
+          body: JSON.stringify(requestFilter),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         }
       );
       const Songs = await response.json();
-
       setData(Songs);
+      ctx.setChords({});
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +36,7 @@ const Chords = () => {
   useEffect(() => {
     fetchData();
   }, [filter]);
-  console.log(filter);
+
   return (
     <>
       <div style={{ paddingBottom: "1rem" }}>

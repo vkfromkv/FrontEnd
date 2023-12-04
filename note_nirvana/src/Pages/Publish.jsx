@@ -109,8 +109,14 @@ export async function action({ request, params }) {
     timeSignature: data.get("TimeSignature"),
   };
 
-  console.log(formData);
-  return redirect("/publish");
+  const response = await fetch("http://localhost:8081/Lyrics/Save", {
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return redirect("/");
 }
 export async function loader() {
   const response = await fetch(

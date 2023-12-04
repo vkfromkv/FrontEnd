@@ -1,11 +1,13 @@
-import tophits from "./tophits.png";
+import { useContext } from "react";
 import rock from "./classicRock.jpeg";
 import altrock from "./90sAlternative.jpeg";
 import hiphop from "./Hiphop.jpeg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../userLogin/UserContext";
 const Cards = () => {
   const navigate = useNavigate();
+  const ctx = useContext(AuthContext);
 
   return (
     <>
@@ -13,13 +15,16 @@ const Cards = () => {
         <Link
           class="card"
           style={{ width: "25rem", height: "18rem" }}
-          to="/chords/TopHits"
+          to="/chords/"
         >
           <img
             src={hiphop}
             class="card-img-top"
             style={{ objectFit: "cover", height: "75%" }}
             alt="Top Hits"
+            onClick={() => {
+              ctx.setChords({ genre: "Hip-Hop" });
+            }}
           />
           <div class="card-body">
             <p class="card-text">
@@ -31,13 +36,16 @@ const Cards = () => {
         <Link
           class="card"
           style={{ width: "25rem", height: "18rem" }}
-          to="/chords/ClassicRock"
+          to="/chords"
         >
           <img
             src={rock}
             class="card-img-top"
             style={{ objectFit: "cover", height: "75%" }}
             alt="Classic Rock Music"
+            onClick={() => {
+              ctx.setChords({ genre: "Rock" });
+            }}
           />
           <div class="card-body">
             <p class="card-text">
@@ -49,13 +57,16 @@ const Cards = () => {
         <Link
           class="card"
           style={{ width: "25rem", height: "18rem" }}
-          to="/chords/90sAlternative"
+          to="/chords"
         >
           <img
             src={altrock}
             class="card-img-top"
             style={{ objectFit: "cover", height: "75%" }}
             alt="90's Alternative"
+            onClick={() => {
+              ctx.setChords({ genre: "Jazz" });
+            }}
           />
           <div class="card-body">
             <p class="card-text">
